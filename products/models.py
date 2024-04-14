@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class Category(models.Model):
@@ -7,7 +7,7 @@ class Category(models.Model):
         'parent'), blank=True, null=True, on_delete=models.CASCADE)
     title = models.CharField(_('title'), max_length=50)
     description = models.TextField(_('description'), blank=True)
-    avator = models.ImageField(_('avator'), blank=True, upload_to='categories')
+    avator = models.ImageField(_('avator'), blank=True, upload_to='categories/')
     is_enable = models.BooleanField(_('is enale'), default=True)
     created_time = models.DateTimeField(_('create time'), auto_now_add=True)
     update_time = models.DateTimeField(_('update time'), auto_now=True)
@@ -19,12 +19,11 @@ class Category(models.Model):
 
 
 class Product (models.Model):
-    parent = models.ForeignKey('self', verbose_name=(
-        'parent'), blank=True, null=True, on_delete=models.CASCADE)
     title = models.CharField(_('title'), max_length=50)
     description = models.TextField(_('description'), blank=True)
-    avator = models.ImageField(_('avator'), blank=True, upload_to='categories')
+    avator = models.ImageField(_('avator'), blank=True, upload_to='products/')
     is_enable = models.BooleanField(_('is enale'), default=True)
+    categories = models.ManyToManyField ('category', verbose_name=_('categories'),blank=True)
     created_time = models.DateTimeField(_('create time'), auto_now_add=True)
     update_time = models.DateTimeField(_('update time'), auto_now=True)
 
